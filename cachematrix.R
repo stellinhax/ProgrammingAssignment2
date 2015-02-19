@@ -1,15 +1,37 @@
-## Put comments here that give an overall description of what your
-## functions do
+### R Programming Assignment 2 - Data Science Specialization rprog-011
 
-## Write a short comment describing this function
+# The following script shows a pair of functions that cache and compute the inverse of a matrix.
+
+# This function creates a special "matrix" object that can cache its inverse.
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  m <- NULL
+  # set the value of the matrix
+  set <- function(x) {
+    x <<- y;
+    m <<- NULL;
+  }
+  # get the value of the matrix
+  get <- function() return(x);
+  setinverse <- function(inv) m <<- inv;
+  getinverse <- function() return(m);
+  # return list 
+  return(list(set = set, get = get, setinverse = setinverse, getinverse = getinverse))
 }
 
+# The next function computes the inverse of the matrix returned by "makeCacheMatrix". 
 
-## Write a short comment describing this function
+# "cacheSolve" should retrieve the inverse from the cache.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  m <- x$getinverse()
+  if(!is.null(m)) {
+    message("Getting cached data...")
+    return(m)
+  }
+  data <- x$get()
+  # Calculate the inverse matrix using the function solve()
+  m <- solve(data, ...)
+  x$setinverse(m)
+  return(m)
 }
